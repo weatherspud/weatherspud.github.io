@@ -461,7 +461,7 @@
 
     let submit = document.createElement('input');
     submit.setAttribute('type', 'submit');
-    submit.setAttribute('value', 'Create Superhex');
+    submit.setAttribute('value', 'Create Hexagonal Grid of Hexes');
     form.appendChild(submit);
     document.body.appendChild(form);
   };
