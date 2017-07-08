@@ -266,7 +266,7 @@
     form.appendChild(input_superhex);
 
     let label_x = document.createElement('label');
-    label_x.textContent = 'Rows:';
+    label_x.textContent = 'Rows: ';
     form.appendChild(label_x);
 
     let input_x = document.createElement('input');
@@ -278,7 +278,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_y = document.createElement('label');
-    label_y.textContent = 'Columns:';
+    label_y.textContent = 'Columns: ';
     form.appendChild(label_y);
 
     let input_y = document.createElement('input');
@@ -290,7 +290,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_start_row = document.createElement('label');
-    label_start_row.textContent = 'Start Row:';
+    label_start_row.textContent = 'Start Row: ';
     form.appendChild(label_start_row);
 
     let input_start_row = document.createElement('input');
@@ -302,7 +302,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_start_col = document.createElement('label');
-    label_start_col.textContent = 'Start Column:';
+    label_start_col.textContent = 'Start Column: ';
     form.appendChild(label_start_col);
 
     let input_start_col = document.createElement('input');
@@ -321,7 +321,7 @@
     form.appendChild(input_coordinate_style_alphanumeric);
 
     let label_coordinate_style_alphanumeric = document.createElement('label');
-    label_coordinate_style_alphanumeric.textContent = 'alphanumeric coordinates';
+    label_coordinate_style_alphanumeric.textContent = ' alphanumeric coordinates';
     form.appendChild(label_coordinate_style_alphanumeric);
 
     form.appendChild(document.createElement('br'));
@@ -333,7 +333,7 @@
     form.appendChild(input_coordinate_style_numeric);
 
     let label_coordinate_style_numeric = document.createElement('label');
-    label_coordinate_style_numeric.textContent = 'numeric coordinates';
+    label_coordinate_style_numeric.textContent = ' numeric coordinates';
     form.appendChild(label_coordinate_style_numeric);
 
     form.appendChild(document.createElement('br'));
@@ -345,7 +345,7 @@
     form.appendChild(input_coordinate_style_none);
 
     let label_coordinate_style_none = document.createElement('label');
-    label_coordinate_style_none.textContent = 'no coordinates';
+    label_coordinate_style_none.textContent = ' no coordinates';
     form.appendChild(label_coordinate_style_none);
 
     form.appendChild(document.createElement('br'));
@@ -381,7 +381,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_x = document.createElement('label');
-    label_x.textContent = 'Hexes per Side:';
+    label_x.textContent = 'Hexes per Side: ';
     form.appendChild(label_x);
 
     let input_x = document.createElement('input');
@@ -399,7 +399,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_start_row = document.createElement('label');
-    label_start_row.textContent = 'Start Row:';
+    label_start_row.textContent = 'Start Row: ';
     form.appendChild(label_start_row);
 
     let input_start_row = document.createElement('input');
@@ -411,7 +411,7 @@
     form.appendChild(document.createElement('br'));
 
     let label_start_col = document.createElement('label');
-    label_start_col.textContent = 'Start Column:';
+    label_start_col.textContent = 'Start Column: ';
     form.appendChild(label_start_col);
 
     let input_start_col = document.createElement('input');
@@ -430,7 +430,7 @@
     form.appendChild(input_coordinate_style_alphanumeric);
 
     let label_coordinate_style_alphanumeric = document.createElement('label');
-    label_coordinate_style_alphanumeric.textContent = 'alphanumeric coordinates';
+    label_coordinate_style_alphanumeric.textContent = ' alphanumeric coordinates';
     form.appendChild(label_coordinate_style_alphanumeric);
 
     form.appendChild(document.createElement('br'));
@@ -442,7 +442,7 @@
     form.appendChild(input_coordinate_style_numeric);
 
     let label_coordinate_style_numeric = document.createElement('label');
-    label_coordinate_style_numeric.textContent = 'numeric coordinates';
+    label_coordinate_style_numeric.textContent = ' numeric coordinates';
     form.appendChild(label_coordinate_style_numeric);
 
     form.appendChild(document.createElement('br'));
@@ -454,7 +454,7 @@
     form.appendChild(input_coordinate_style_none);
 
     let label_coordinate_style_none = document.createElement('label');
-    label_coordinate_style_none.textContent = 'no coordinates';
+    label_coordinate_style_none.textContent = ' no coordinates';
     form.appendChild(label_coordinate_style_none);
 
     form.appendChild(document.createElement('br'));
