@@ -271,6 +271,7 @@
 
     let input_x = document.createElement('input');
     input_x.setAttribute('name', 'rows');
+    input_x.setAttribute('size', 5);
     input_x.setAttribute('type', 'text');
     input_x.setAttribute('value', '10');
     form.appendChild(input_x);
@@ -283,6 +284,7 @@
 
     let input_y = document.createElement('input');
     input_y.setAttribute('name', 'columns');
+    input_y.setAttribute('size', 5);
     input_y.setAttribute('type', 'text');
     input_y.setAttribute('value', '8');
     form.appendChild(input_y);
@@ -295,6 +297,7 @@
 
     let input_start_row = document.createElement('input');
     input_start_row.setAttribute('name', 'start_row');
+    input_start_row.setAttribute('size', 5);
     input_start_row.setAttribute('type', 'text');
     input_start_row.setAttribute('value', '1');
     form.appendChild(input_start_row);
@@ -307,6 +310,7 @@
 
     let input_start_col = document.createElement('input');
     input_start_col.setAttribute('name', 'start_column');
+    input_start_col.setAttribute('size', 5);
     input_start_col.setAttribute('type', 'text');
     input_start_col.setAttribute('value', '1');
     form.appendChild(input_start_col);
@@ -386,6 +390,7 @@
 
     let input_x = document.createElement('input');
     input_x.setAttribute('name', 'rows');
+    input_x.setAttribute('size', 5);
     input_x.setAttribute('type', 'text');
     input_x.setAttribute('value', '6');
     form.appendChild(input_x);
@@ -404,6 +409,7 @@
 
     let input_start_row = document.createElement('input');
     input_start_row.setAttribute('name', 'start_row');
+    input_start_row.setAttribute('size', 5);
     input_start_row.setAttribute('type', 'text');
     input_start_row.setAttribute('value', '1');
     form.appendChild(input_start_row);
@@ -416,6 +422,7 @@
 
     let input_start_col = document.createElement('input');
     input_start_col.setAttribute('name', 'start_column');
+    input_start_col.setAttribute('size', 5);
     input_start_col.setAttribute('type', 'text');
     input_start_col.setAttribute('value', '1');
     form.appendChild(input_start_col);
