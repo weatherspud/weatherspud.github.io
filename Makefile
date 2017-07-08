@@ -2,7 +2,7 @@ build: build.dice_notation build.hex_grid
 
 build.dice_notation:
 	cd ../web-dice-notation && make build && make eslint
-	cp ../web-dice-notation/static/js/dice_notation.bundle.js .
+	cp ../web-dice-notation/dest/js/dice_notation.bundle.js .
 
 build.hex_grid:
 	cd ../web-grids && make build && make eslint

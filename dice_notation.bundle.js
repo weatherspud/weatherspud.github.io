@@ -554,7 +554,9 @@ module.exports = opcodes;
 
 
 const grammar = `
-start = int_expr
+start = top_expr
+
+_ = [ \\n\\t\\r\\f]+
 
 digits = digits:[0-9]+ {
   return ['literal', parseInt(digits.join(''))];
@@ -564,11 +566,50 @@ single_die_expr = "d" num_faces:digits {
   return ['die', ['literal', 1], num_faces];
 }
 
+geometric_expr_op = "III" / "II" / "IV" / "I" / "V"
+
+geometric_expr = "d" op:geometric_expr_op {
+  return [op];
+}
+
 multiple_die_expr = num_dice:digits "d" num_faces:digits {
   return ['die', num_dice, num_faces];
 }
 
-int_expr = multiple_die_expr / single_die_expr / digits
+keep_drop_op = "kh" / "kl" / "dh" / "dl" / "k" / "d"
+
+keep_drop_expr = num_dice:digits "d" num_faces:digits op:keep_drop_op num_keep_drop:digits {
+  if (num_keep_drop[1] > num_dice[1]) {
+    throw new Error('cannot keep or drop more dice than are rolled');
+  }
+  if (op === 'k' || op === 'kh') {
+    return ['keep-high', num_dice, num_faces, num_keep_drop];
+  }
+  if (op === 'kl') {
+    return ['keep-low', num_dice, num_faces, num_keep_drop];
+  }
+  if (op === 'd' || op === 'dl') {
+    return ['keep-high', num_dice, num_faces, ['literal', num_dice[1] - num_keep_drop[1]]];
+  }
+  if (op === 'dh') {
+    return ['keep-low', num_dice, num_faces, ['literal', num_dice[1] - num_keep_drop[1]]];
+  }
+  throw new Error('unrecognized keep/drop operator: ' + op);
+}
+
+int_expr = keep_drop_expr /  multiple_die_expr / single_die_expr / geometric_expr / digits
+
+prod_expr = left:int_expr _? op:[*/] _? right:prod_expr {
+  return [op, left, right];
+} / int_expr
+
+sum_expr = left:prod_expr _? op:[+-] _? right:sum_expr {
+  return [op, left, right];
+} / prod_expr
+
+top_expr = _? expr:sum_expr _? {
+  return expr;
+}
 `;
 
 const parser = __WEBPACK_IMPORTED_MODULE_0_pegjs___default.a.generate(grammar);
@@ -581,6 +622,20 @@ const parser = __WEBPACK_IMPORTED_MODULE_0_pegjs___default.a.generate(grammar);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+const max_geometric_rolls = 100;
+
+const geometric_roll = function (stop_if_le, num_faces) {
+  let count = 1;
+  for (let i = 0; i < max_geometric_rolls; ++i) {
+    if (Math.ceil(Math.random() * num_faces) <= stop_if_le) {
+      return count;
+    }
+    count = count + 1;
+  }
+
+  return count;
+};
+
 const roll = function (ast) {
   if (ast[0] === 'literal') {
     return ast[1];
@@ -590,6 +645,46 @@ const roll = function (ast) {
       sum = sum + Math.ceil(Math.random() * ast[2][1]);
     }
     return sum;
+  } else if (ast[0] === 'keep-high') {
+    let rolls = [];
+    for (let i = 0; i < ast[1][1]; ++i) {
+      rolls.push(Math.ceil(Math.random() * ast[2][1]));
+    }
+    rolls.sort().reverse();
+    let sum = 0;
+    for (let i = 0; i < ast[3][1]; ++i) {
+      sum = sum + rolls[i];
+    }
+    return sum;
+  } else if (ast[0] === 'keep-low') {
+    let rolls = [];
+    for (let i = 0; i < ast[1][1]; ++i) {
+      rolls.push(Math.ceil(Math.random() * ast[2][1]));
+    }
+    rolls.sort();
+    let sum = 0;
+    for (let i = 0; i < ast[3][1]; ++i) {
+      sum = sum + rolls[i];
+    }
+    return sum;
+  } else if (ast[0] === '*') {
+    return roll(ast[1]) * roll(ast[2]);
+  } else if (ast[0] === '/') {
+    return roll(ast[1] / roll(ast[2]));
+  } else if (ast[0] === '+') {
+    return roll(ast[1]) + roll(ast[2]);
+  } else if (ast[0] === '-') {
+    return roll(ast[1] - roll(ast[2]));
+  } else if (ast[0] === 'I') {
+    return geometric_roll(1, 6);
+  } else if (ast[0] === 'II') {
+    return geometric_roll(2, 6);
+  } else if (ast[0] === 'III') {
+    return geometric_roll(3, 6);
+  } else if (ast[0] === 'IV') {
+    return geometric_roll(4, 6);
+  } else if (ast[0] === 'V') {
+    return geometric_roll(5, 6);
   }
   throw new Error('unrecognized node type: ' + ast[0]);
 };
@@ -8139,6 +8234,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const DEBUG = true;
+
 (function () {
   const render_form = function (url) {
     let dice = url.searchParams.get('dice');
@@ -8169,16 +8266,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     let dice = url.searchParams.get('dice');
 
     if (dice) {
-      let ast = __WEBPACK_IMPORTED_MODULE_0__parser_js__["a" /* parser */].parse(dice);
-
-      /*
-      let debug = document.createElement('p');
-      debug.textContent = JSON.stringify(ast);
-      document.body.appendChild(debug);
-      */
-
       let result = document.createElement('p');
-      result.textContent = '' + __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__roll_js__["a" /* roll */])(ast);
+      let ast = null;
+
+      try {
+        ast = __WEBPACK_IMPORTED_MODULE_0__parser_js__["a" /* parser */].parse(dice);
+      } catch (e) {
+        if (DEBUG) {
+          result.textContent = 'could not parse: ' + dice + ': ' + e;
+        } else {
+          result.textContent = 'invalid dice notation: ' + dice;
+        }
+      }
+
+      if (ast) {
+        try {
+          result.textContent = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__roll_js__["a" /* roll */])(ast);
+        } catch (e) {
+          if (DEBUG) {
+            result.textContent = 'could not evaluate: ' + e;
+          } else {
+            result.textContent = 'error';
+          }
+        }
+      }
+
       document.body.appendChild(result);
     }
 
