@@ -8248,7 +8248,7 @@ const DEBUG = true;
     label.textContent = 'Dice Notation: ';
     form.appendChild(label);
 
-    let input_dice = document.createElement('textarea');
+    let input_dice = document.createElement('input');
     input_dice.setAttribute('name', 'dice');
     input_dice.setAttribute('size', 21);
     input_dice.setAttribute('type', 'text');
