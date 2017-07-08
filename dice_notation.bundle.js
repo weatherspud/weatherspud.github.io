@@ -8245,12 +8245,12 @@ const DEBUG = true;
     form.setAttribute('action', url.origin + url.pathname);
 
     let label = document.createElement('label');
-    label.textContent = 'Dice Notation (e.g. 3d6): ';
+    label.textContent = 'Dice Notation: ';
     form.appendChild(label);
 
-    let input_dice = document.createElement('input');
+    let input_dice = document.createElement('textarea');
     input_dice.setAttribute('name', 'dice');
-    input_dice.setAttribute('size', 16);
+    input_dice.setAttribute('size', 21);
     input_dice.setAttribute('type', 'text');
     input_dice.setAttribute('value', dice || '');
     form.appendChild(input_dice);
