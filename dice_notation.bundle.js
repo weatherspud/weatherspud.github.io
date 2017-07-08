@@ -8245,7 +8245,7 @@ const DEBUG = true;
     form.setAttribute('action', url.origin + url.pathname);
 
     let label = document.createElement('label');
-    label.textContent = 'Dice Expression (e.g. 3d6):';
+    label.textContent = 'Dice Notation (e.g. 3d6):';
     form.appendChild(label);
 
     let input_dice = document.createElement('input');
