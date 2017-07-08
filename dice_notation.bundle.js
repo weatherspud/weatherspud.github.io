@@ -8250,6 +8250,7 @@ const DEBUG = true;
 
     let input_dice = document.createElement('input');
     input_dice.setAttribute('name', 'dice');
+    input_dice.setAttribute('size', 16);
     input_dice.setAttribute('type', 'text');
     input_dice.setAttribute('value', dice || '');
     form.appendChild(input_dice);
